@@ -12,40 +12,43 @@ contract BuyMeACoffee {
         string name,
         string message
     );
-    struct Memo{
+    struct Memo {
         address from;
         uint256 timestamp;
         string name;
         string message;
     }
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(msg.sender == owner, "You do not have permission to do that");
         _;
     }
-    modifier onlySomeEther {
+    modifier onlySomeEther() {
         require(msg.value > 0, "You must send some ether");
         _;
     }
-    constructor()  {
+
+    constructor() {
         owner = payable(msg.sender);
     }
 
-    function changeOwner(address payable newOwner) public onlyOwner {
+    function changeOwner(address payable newOwner) public {
         owner = newOwner;
     }
 
-    function buyCoffee(
-    string memory _name,
-    string memory _message
-     ) external payable onlySomeEther {
-         memos.push(Memo(msg.sender, block.timestamp, _name, _message));
-         emit NewMemo(msg.sender, block.timestamp, _name, _message);
+    function buyCoffee(string memory _name, string memory _message)
+        external
+        payable
+        onlySomeEther
+    {
+        memos.push(Memo(msg.sender, block.timestamp, _name, _message));
+        emit NewMemo(msg.sender, block.timestamp, _name, _message);
     }
 
     function withDrawTips() external onlyOwner {
         owner.transfer(address(this).balance);
     }
-      function getMemos() view external returns (Memo[] memory) {
+
+    function getMemos() external view returns (Memo[] memory) {
         return memos;
     }
 }

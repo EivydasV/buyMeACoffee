@@ -20,10 +20,10 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: '0.8.4',
-  networks: {
-    georli: {
-      url: process.env.GEORLI_URL,
-      accounts: [process.env.PRIVATE_KEY],
-    },
-  },
+  // networks: {
+  //   georli: {
+  //     url: process.env.GEORLI_URL,
+  //     accounts: [process.env.PRIVATE_KEY],
+  //   },
+  // },
 }
